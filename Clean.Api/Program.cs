@@ -1,4 +1,6 @@
 ﻿using Application.Bases;
+using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using SsoManager.Server.Bases;
 
 
@@ -22,6 +24,7 @@ app.UseSwaggerUI();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapIdentityApi<Person>();
 
 app.UseCors(o =>
 {

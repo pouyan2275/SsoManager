@@ -35,7 +35,7 @@ public class CrudService<TDto, TDtoSelect, TEntity> : ICrudService<TDto, TDtoSel
 
         entity.CreatedOn = DateTime.Now;
         entity.CreatedBy = default(Guid);
-        entity.Id = id;
+        entity.Id = id.ToString();
 
         await _repository.AddAsync(entity, ct: ct);
     }
@@ -77,7 +77,7 @@ public class CrudService<TDto, TDtoSelect, TEntity> : ICrudService<TDto, TDtoSel
 
         entity!.ModifiedOn = DateTime.Now;
         entity!.ModifiedBy = default(Guid);
-        entity!.Id = id;
+        entity!.Id = id.ToString();
 
         await _repository.UpdateAsync(entity!, ct: ct);
     }

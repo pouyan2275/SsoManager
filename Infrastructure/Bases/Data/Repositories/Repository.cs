@@ -58,24 +58,24 @@ public class Repository<TEntity> : IRepository<TEntity>
 
     public virtual async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var record = await TableNoTracking.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted, cancellationToken: ct);
+        var record = await TableNoTracking.FirstOrDefaultAsync(x => x.Id == id.ToString() && !x.IsDeleted, cancellationToken: ct);
         return record;
     }
 
     public virtual async Task<TDestination?> GetByIdAsync<TDestination>(Guid id, CancellationToken ct = default)
     {
-        var record = (await TableNoTracking.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted, cancellationToken: ct)).Adapt<TDestination>();
+        var record = (await TableNoTracking.FirstOrDefaultAsync(x => x.Id == id.ToString() && !x.IsDeleted, cancellationToken: ct)).Adapt<TDestination>();
         return record;
     }
 
     public virtual async Task<TDestination?> GetByIdEagleLoadingAsync<TDestination>(Guid id, CancellationToken ct = default)
     {
-        var record = await TableNoTracking.Where(x => x.Id == id && !x.IsDeleted).ProjectToType<TDestination?>().FirstOrDefaultAsync(cancellationToken: ct);
+        var record = await TableNoTracking.Where(x => x.Id == id.ToString() && !x.IsDeleted).ProjectToType<TDestination?>().FirstOrDefaultAsync(cancellationToken: ct);
         return record;
     }
     public virtual async Task<TEntity?> GetByIdEagleLoadingAsync(Guid id, CancellationToken ct = default)
     {
-        var record = await TableNoTracking.Where(x => x.Id == id && !x.IsDeleted).ProjectToType<TEntity?>().FirstOrDefaultAsync(cancellationToken: ct);
+        var record = await TableNoTracking.Where(x => x.Id == id.ToString() && !x.IsDeleted).ProjectToType<TEntity?>().FirstOrDefaultAsync(cancellationToken: ct);
         return record;
     }
 
@@ -88,14 +88,14 @@ public class Repository<TEntity> : IRepository<TEntity>
 
     public virtual async Task DeleteAsync(Guid id, bool save = true, CancellationToken ct = default)
     {
-        await Entity.Where(x=> x.Id == id && !x.IsDeleted)
+        await Entity.Where(x=> x.Id == id.ToString() && !x.IsDeleted)
             .ExecuteUpdateAsync(x => 
             x.SetProperty(p => p.IsDeleted, true), cancellationToken: ct);
     }
 
     public virtual async Task DeleteRecordAsync(Guid id, bool save = true, CancellationToken ct = default)
     {
-        await Entity.Where(x => x.Id == id).ExecuteDeleteAsync(ct);
+        await Entity.Where(x => x.Id == id.ToString()).ExecuteDeleteAsync(ct);
     }
 
     public virtual async Task<List<TDestination>> PaginationEagleLoadingAsync<TDestination>(List<FilterParam>? filterParams,

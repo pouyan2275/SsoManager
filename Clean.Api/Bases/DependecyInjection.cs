@@ -1,4 +1,7 @@
-﻿using Microsoft.OpenApi.Any;
+﻿using Domain.Entities;
+using Infrastructure.Bases.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -8,6 +11,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
+        services.AddAuthorization();
+        services.AddIdentityApiEndpoints<Person>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
 
         services.AddControllers();
 
