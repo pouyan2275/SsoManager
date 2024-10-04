@@ -3,7 +3,7 @@ using Application.Bases.Interfaces.IServices;
 using Domain.Bases.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Personal.Server.Bases.Controllers;
+namespace SsoManager.Server.Bases.Controllers;
 /// <summary>
 /// Restfull api
 /// </summary>

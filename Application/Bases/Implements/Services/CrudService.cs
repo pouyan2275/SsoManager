@@ -33,7 +33,7 @@ public class CrudService<TDto, TDtoSelect, TEntity> : ICrudService<TDto, TDtoSel
 
         var entity = Tentity.Adapt<TEntity>();
 
-        entity.CreatedOn = DateTime.UtcNow;
+        entity.CreatedOn = DateTime.Now;
         entity.CreatedBy = default(Guid);
         entity.Id = id;
 
@@ -75,7 +75,7 @@ public class CrudService<TDto, TDtoSelect, TEntity> : ICrudService<TDto, TDtoSel
 
         entity = Tentity.Adapt(entity);
 
-        entity!.ModifiedOn = DateTime.UtcNow;
+        entity!.ModifiedOn = DateTime.Now;
         entity!.ModifiedBy = default(Guid);
         entity!.Id = id;
 

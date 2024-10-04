@@ -3,9 +3,9 @@ using Application.IServices;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Personal.Server.Bases.Controllers;
+using SsoManager.Server.Bases.Controllers;
 
-namespace Personal.Server.Controllers
+namespace SsoManager.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

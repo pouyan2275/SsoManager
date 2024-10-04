@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Personal.Server.Bases;
+namespace SsoManager.Server.Bases;
 
 public static class DependencyInjection
 {
