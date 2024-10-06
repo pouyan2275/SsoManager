@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 namespace Infrastructure.Bases.Data;
 
-public class ApplicationDbContext : IdentityDbContext<Person>
+public class ApplicationDbContext : IdentityDbContext<Person,IdentityRole<Guid>,Guid>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

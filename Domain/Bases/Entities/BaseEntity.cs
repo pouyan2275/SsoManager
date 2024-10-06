@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Bases.Entities
 {
-    public abstract class BaseEntity : IdentityUser
+    public abstract class BaseEntity : IdentityUser<Guid>
     {
         public Guid? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }

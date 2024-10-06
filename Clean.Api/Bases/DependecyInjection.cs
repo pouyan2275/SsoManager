@@ -11,9 +11,21 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
+        #region Authentication
         services.AddAuthorization();
         services.AddIdentityApiEndpoints<Person>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        //services.Configure<IdentityOptions>(options =>
+        //{
+
+        //});
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(250);
+        });
+
+        #endregion Authentication
 
         services.AddControllers();
 

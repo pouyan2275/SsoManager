@@ -4,14 +4,14 @@ using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SsoManager.Server.Bases.Controllers;
+using Personal.Server.Bases.Controllers;
 
 namespace SsoManager.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PersonController : CrudController<PersonDto, PersonDtoSelect, Person>
+    public class PersonController : BaseController<PersonDto, PersonDtoSelect, Person>
     {
         private readonly IPersonService _personService;
         private readonly IPersonRepository _repository;

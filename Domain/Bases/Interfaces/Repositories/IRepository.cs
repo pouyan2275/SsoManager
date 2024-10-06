@@ -21,9 +21,9 @@ namespace Domain.Bases.Interfaces.Repositories
         public Task UpdateAsync(TEntity Tentity, bool save = true, CancellationToken ct = default);
         public Task DeleteAsync(Guid entity, bool save = true, CancellationToken ct = default);
         public Task DeleteRecordAsync(Guid entity, bool save = true, CancellationToken ct = default);
-        public Task<List<TEntity>> PaginationAsync(List<FilterParam>? filterParams, 
-            List<SortParam>? sortParams, 
-            int pageNumber = 1, 
+        public Task<List<TEntity>> PaginationAsync(List<FilterParam>? filterParams,
+            List<SortParam>? sortParams,
+            int pageNumber = 1,
             int pageSize = int.MaxValue,
             CancellationToken ct = default);
         public Task<List<TDestination>> PaginationAsync<TDestination>(List<FilterParam>? filterParams,
