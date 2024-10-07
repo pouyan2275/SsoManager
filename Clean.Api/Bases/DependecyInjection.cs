@@ -1,6 +1,5 @@
 ﻿using Domain.Entities;
 using Infrastructure.Bases.Data;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -22,7 +21,8 @@ public static class DependencyInjection
         //});
         services.ConfigureApplicationCookie(options =>
         {
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(250);
+            //1 year
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(525960);
         });
 
         #endregion Authentication
