@@ -10,5 +10,6 @@ namespace Domain.Bases.Entities
         public Guid? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public bool IsActive { get; set; } = true;
     }
 }

@@ -83,5 +83,19 @@ namespace SsoManager.Server.Controllers
                 return BadRequest(result);
             return Ok();
         }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult> ResetPassword(ResetPasswordDto dto)
+        {
+            var user = await _userManager.FindByNameAsync(dto.PhoneNumber);
+            if (user == null)
+                return BadRequest();
+
+            var result = await _userManager.ResetPasswordAsync(user, dto.ResetCode, dto.NewPassword);
+            if(!result.Succeeded)
+                return BadRequest("توکن وارد شده صحیح نیست");
+
+            return Ok();
+        }
     }
 }

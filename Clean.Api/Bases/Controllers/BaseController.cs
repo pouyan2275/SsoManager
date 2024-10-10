@@ -1,6 +1,7 @@
 ﻿using Application.Bases.Dtos.Paginations;
 using Application.Bases.Interfaces.IServices;
 using Domain.Bases.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Personal.Server.Bases.Controllers;
@@ -11,6 +12,7 @@ namespace Personal.Server.Bases.Controllers;
 /// <param name="repository"></param>
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class BaseController<TEntity>(IBaseService<TEntity> baseService) : BaseController<TEntity, TEntity, TEntity>(baseService) where TEntity : BaseEntity { }
 public class BaseController<TDto, TEntity>(IBaseService<TDto, TEntity> baseService) : BaseController<TDto, TDto, TEntity>(baseService) where TEntity : BaseEntity { }
 
