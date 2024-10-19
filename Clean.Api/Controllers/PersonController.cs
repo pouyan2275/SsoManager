@@ -61,24 +61,7 @@ namespace SsoManager.Server.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult> Login(LoginDto loginDto, CancellationToken ct = default)
         {
-            var useCookieScheme = (loginDto.UseCookies == true) || (loginDto.UseSessionCookies == true);
-            var isPersistent = (loginDto.UseCookies == true) && (loginDto.UseSessionCookies != true);
-            _signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
-
-            var result = await _signInManager.PasswordSignInAsync(loginDto.PhoneNumber, loginDto.Password, isPersistent, lockoutOnFailure: false);
-
-            if (result.RequiresTwoFactor)
-            {
-                if (!string.IsNullOrEmpty(loginDto.TwoFactorCode))
-                {
-                    result = await _signInManager.TwoFactorAuthenticatorSignInAsync(loginDto.TwoFactorCode, isPersistent, rememberClient: isPersistent);
-                }
-                else if (!string.IsNullOrEmpty(loginDto.TwoFactorRecoveryCode))
-                {
-                    result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(loginDto.TwoFactorRecoveryCode);
-                }
-            }
-
+            var result = await _personService.Login(loginDto, ct);
             if (!result.Succeeded)
                 return BadRequest(result);
             return Ok();
