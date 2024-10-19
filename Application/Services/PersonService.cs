@@ -58,5 +58,26 @@ public class PersonService : BaseService<PersonDto, PersonDtoSelect, Person>, IP
         }
         return result;
     }
+    public async Task<IdentityResult> Register(RegisterDto registerDto, CancellationToken ct = default)
+    {
+        var user = new Person
+        {
+            PhoneNumber = registerDto.PhoneNumber
+        };
+        await _userStore.SetUserNameAsync(user, registerDto.PhoneNumber, ct);
+
+        var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+        return result;
+    }
+    public async Task<IdentityResult> ResetPassword(ResetPasswordDto dto,CancellationToken ct = default)
+    {
+        var user = await _userManager.FindByNameAsync(dto.PhoneNumber) ?? throw new Exception("کاربر یافت نشد");
+
+        var result = await _userManager.ResetPasswordAsync(user, dto.ResetCode, dto.NewPassword);
+        if (!result.Succeeded)
+            throw new Exception("توکن وارد شده صحیح نیست");
+        return result;
+    }
 
 }

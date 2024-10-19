@@ -49,11 +49,8 @@ namespace SsoManager.Server.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult> Register(RegisterDto registerDto, CancellationToken ct = default)
         {
-            var user = new Person();
-            user.PhoneNumber = registerDto.PhoneNumber;
-            await _userStore.SetUserNameAsync(user, registerDto.PhoneNumber, ct);
+            var result = await _personService.Register(registerDto,ct);
 
-            var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded)
                 return BadRequest(result);
             return Ok();
@@ -68,16 +65,11 @@ namespace SsoManager.Server.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult> ResetPassword(ResetPasswordDto dto)
+        public async Task<ActionResult> ResetPassword(ResetPasswordDto dto,CancellationToken ct = default)
         {
-            var user = await _userManager.FindByNameAsync(dto.PhoneNumber);
-            if (user == null)
-                return BadRequest();
-
-            var result = await _userManager.ResetPasswordAsync(user, dto.ResetCode, dto.NewPassword);
-            if(!result.Succeeded)
-                return BadRequest("توکن وارد شده صحیح نیست");
-
+            var result = await _personService.ResetPassword(dto,ct);
+            if (!result.Succeeded)
+                return BadRequest(result);
             return Ok();
         }
     }
