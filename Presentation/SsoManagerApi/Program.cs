@@ -10,9 +10,9 @@ builder.Services
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-#if !DEBUG
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-#endif
+//#if !DEBUG
+//app.UseMiddleware<ExceptionHandlingMiddleware>();
+//#endif
 
 app.UseSwagger();
 app.UseSwaggerUI();

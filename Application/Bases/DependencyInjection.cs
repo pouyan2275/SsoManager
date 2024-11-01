@@ -1,5 +1,6 @@
 ﻿using Application.Bases.Implements.Services;
 using Application.Bases.Interfaces.IServices;
+using Application.DependecyInjections;
 using Infrastructure.Bases;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,8 +10,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddInfrastructure();
-
+        services.AddInfrastructure()
+            .AddBaseAuthentication();
 
 
 

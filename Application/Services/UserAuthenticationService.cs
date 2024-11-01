@@ -32,34 +32,23 @@ public class UserAuthenticationService : BaseService<UserAuthenticationDto, User
     }
     public async Task<SignInResult> Login(LoginDto loginDto, CancellationToken ct = default)
     {
-        var useCookieScheme = (loginDto.UseCookies == true) || (loginDto.UseSessionCookies == true);
-        var isPersistent = (loginDto.UseCookies == true) && (loginDto.UseSessionCookies != true);
+        var useCookieScheme = loginDto.UseCookies == true ? true : false;
         _signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
        
-        var result = await _signInManager.PasswordSignInAsync(loginDto.PhoneNumber, loginDto.Password, isPersistent, lockoutOnFailure: false);
+        var result = await _signInManager.PasswordSignInAsync(loginDto.NationalCode, loginDto.Password, useCookieScheme, lockoutOnFailure: false);
 
-        if (result.RequiresTwoFactor)
-        {
-            if (!string.IsNullOrEmpty(loginDto.TwoFactorCode))
-            {
-                result = await _signInManager.TwoFactorAuthenticatorSignInAsync(loginDto.TwoFactorCode, isPersistent, rememberClient: isPersistent);
-            }
-            else if (!string.IsNullOrEmpty(loginDto.TwoFactorRecoveryCode))
-            {
-                result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(loginDto.TwoFactorRecoveryCode);
-            }
-        }
         return result;
     }
     public async Task<IdentityResult> Register(RegisterDto registerDto, CancellationToken ct = default)
     {
         var user = new UserAuthentication
         {
+            UserName = registerDto.NationalCode,
             PhoneNumber = registerDto.PhoneNumber
         };
-        await _userStore.SetUserNameAsync(user, registerDto.PhoneNumber, ct);
+        await _userStore.SetUserNameAsync(user, registerDto.NationalCode, ct);
 
-        var result = await _userManager.CreateAsync(user, registerDto.Password);
+        var result = await _userManager.CreateAsync(user, registerDto.PhoneNumber);
 
         return result;
     }

@@ -7,26 +7,28 @@ using System;
 using System.Reflection;
 namespace Infrastructure.Bases.Data;
 
-public class ApplicationDbContext : IdentityDbContext<UserAuthentication, IdentityRole<Guid>, Guid>
+public class ApplicationDbContext : IdentityDbContext<UserAuthentication,UserRole,Guid>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        var entities = Assembly.GetAssembly(typeof(BaseEntity))?.GetTypes()
-            .Where(x=> (
-            x.IsSubclassOf(typeof(BaseEntity)) 
-            || x.IsSubclassOf(typeof(BaseEntityEmpty))
-            ) 
-            && !x.IsAbstract);
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    var entities = Assembly.GetAssembly(typeof(BaseEntity))?.GetTypes()
+    //        .Where(x => (
+    //        x.IsSubclassOf(typeof(BaseEntity))
+    //        || x.IsSubclassOf(typeof(BaseEntityEmpty))
+    //        || x.IsSubclassOf(typeof(IdentityUser<Guid>))
+    //        || x.IsSubclassOf(typeof(IdentityRole<Guid>))
+    //        )
+    //        && !x.IsAbstract).ToList();
 
-        foreach (var entity in entities!)
-        {
-                modelBuilder.Entity(entity);
-        }
+    //    foreach (var entity in entities!)
+    //    {
+    //        modelBuilder.Entity(entity);
+    //    }
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-    }
+    //    modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+    //}
 }
