@@ -1,0 +1,14 @@
+﻿@page "/"
+@inject NavigationManager navigationManager
+
+
+@code{
+    protected override void OnInitialized()
+    {
+        MethodToTriggerUrl();
+    }
+    private void MethodToTriggerUrl()
+    {
+        navigationManager.NavigateTo("/GhasemIran/FoDarkhastToday");
+    }
+}

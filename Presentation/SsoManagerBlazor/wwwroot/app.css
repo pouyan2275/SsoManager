@@ -1,0 +1,59 @@
+html, body {
+    font-family: 'Vazir FD-WOL';
+    direction: rtl;
+}
+
+
+
+/*Customized Css Start*/
+body{
+    display:table;
+}
+.site-layout{
+    height:auto;
+    width:auto;
+}
+.anticon-right, .anticon-left {
+    transform: rotate(180deg);
+}
+tbody,  th{
+    text-align: right;
+}
+table .ant-table-cell th{
+    text-align:right;
+}
+ul, li{
+    direction:rtl;
+    text-align:right;
+}
+.ant-table-thead > tr > th {
+    text-align: right;
+}
+svg{
+    font-size:19px;
+}
+.ant-layout.ant-layout-has-sider > .ant-layout, .ant-layout.ant-layout-has-sider > .ant-layout-content {
+    width: auto;
+}
+.ant-layout {
+    min-height: 100%;
+}
+.ant-pagination-prev, .ant-pagination-jump-prev, .ant-pagination-jump-next{
+    margin-right:0;
+    margin-left: 8px;
+}
+.ant-pagination-item {
+    margin-right: 0;
+    margin-left: 8px;
+}
+.ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-link-icon, .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-link-icon {
+    transform: rotate(180deg);
+}
+button, html [type="button"], [type="reset"], [type="submit"] {
+    left: 0;
+    right: auto;
+}
+.ant-modal-footer{
+    text-align: left;
+}
+/*Customized Css End*/

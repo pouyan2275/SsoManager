@@ -3,10 +3,11 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Reflection;
 namespace Infrastructure.Bases.Data;
 
-public class ApplicationDbContext : IdentityDbContext<Person,IdentityRole<Guid>,Guid>
+public class ApplicationDbContext : IdentityDbContext<UserAuthentication, IdentityRole<Guid>, Guid>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -14,17 +15,18 @@ public class ApplicationDbContext : IdentityDbContext<Person,IdentityRole<Guid>,
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var entities = Assembly.GetAssembly(typeof(BaseEntity))?.GetTypes();
+        var entities = Assembly.GetAssembly(typeof(BaseEntity))?.GetTypes()
+            .Where(x=> (
+            x.IsSubclassOf(typeof(BaseEntity)) 
+            || x.IsSubclassOf(typeof(BaseEntityEmpty))
+            ) 
+            && !x.IsAbstract);
 
         foreach (var entity in entities!)
         {
-            if (entity.IsSubclassOf(typeof(BaseEntity)) && !entity.IsAbstract)
-                modelBuilder.Entity(entity)
-                .HasIndex("IsDeleted")
-                .HasFilter("IsDeleted = 0");
+                modelBuilder.Entity(entity);
         }
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-        base.OnModelCreating(modelBuilder);
     }
 }

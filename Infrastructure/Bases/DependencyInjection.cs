@@ -1,12 +1,10 @@
-﻿using Domain.Bases.Interfaces.Repositories;
-using Domain.Interfaces.Repositories;
-using Infrastructure.Data.Repositories;
-using Infrastructure.Bases.Data.Repositories;
+﻿using Infrastructure.Bases.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Bases.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-
+using Infrastructure.Bases.Interfaces.Repositories;
+using Microsoft.AspNetCore.Identity;
 namespace Infrastructure.Bases;
 
 public static class DependencyInjection
@@ -16,8 +14,20 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>((conf, option) =>
         {
             var configuration = conf.GetRequiredService<IConfiguration>();
-            option.UseSqlServer(configuration.GetConnectionString("SqlServer"),
+            option.UseSqlServer(configuration.GetConnectionString("BaseConnection"),
                 dboption => dboption.EnableRetryOnFailure());
+        });
+
+        services.AddSingleton(typeof(DbContextFactory), (conf) =>
+        {
+            var configuration = conf.GetRequiredService<IConfiguration>();
+            var appSettingCons = configuration.GetSection("ConnectionStrings").GetChildren();
+            var dicConnStrings = new Dictionary<string, string>();
+            foreach (var item in appSettingCons)
+            {
+                dicConnStrings.Add(item.Path[18..], item.Value ?? throw new NullReferenceException());
+            }
+            return new DbContextFactory(dicConnStrings);
         });
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -27,13 +37,13 @@ public static class DependencyInjection
         var irepositoryAssembly = typeof(IRepository<>).Assembly;
 
         var repositories = repositoryAssembly.GetExportedTypes()
-            .Where(x => x.FullName!.Contains("Repositories") &&
-            !x.FullName!.Contains("Base")
+            .Where(x => x.FullName!.Contains("Data.Repositories") &&
+            !x.FullName!.Contains("Bases")
             )
             .ToList();
         var irepositories = irepositoryAssembly.GetExportedTypes()
-            .Where(x => x.FullName!.Contains("Repositories") &&
-            !x.FullName!.Contains("Base"))
+            .Where(x => x.FullName!.Contains("Interfaces.Repositories") &&
+            !x.FullName!.Contains("Bases"))
             .ToList();
 
         for (int i = 0; i < repositories.Count; i++)

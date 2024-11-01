@@ -1,0 +1,44 @@
+﻿@namespace GhasemIranGatewayBlazor.Layouts
+@inherits LayoutComponentBase
+<Layout Id="root">
+    <Sider @bind-Collapsed=@collapsed NoTrigger>
+        <div class="logo" />
+        <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" DefaultSelectedKeys=@(new[]{"/GhasemIran/FoMoshtari"})>
+            <MenuItem RouterLink="/GhasemIran/FoDarkhastToday">
+                <Icon Type="snippets" Theme="outline" />
+                <span>درخواست های روز</span>
+            </MenuItem>
+            <MenuItem RouterLink="/GhasemIran/FoFactorToday">
+                <Icon Type="snippets" Theme="outline" />
+                <span>فاکتور های روز جاری</span>
+            </MenuItem>
+            <MenuItem RouterLink="/GhasemIran/FoFactor">
+                <Icon Type="snippets" Theme="outline" />
+                <span>فاکتور ها</span>
+            </MenuItem>
+            <MenuItem RouterLink="/GhasemIran/FoMoshtari">
+                <Icon Type="user" Theme="outline" />
+                <span>مشتریان</span>
+            </MenuItem>
+            <MenuItem RouterLink="/GhasemIran/FoMoshtariInfo">
+                <Icon Type="user" Theme="outline" />
+                <span>اطلاعات مشتریان</span>
+            </MenuItem>
+            <MenuItem RouterLink="/">
+                <Icon Type="user" Theme="outline" />
+                <span>رانندگان</span>
+            </MenuItem>
+            <MenuItem RouterLink="/">
+                <Icon Type="car" Theme="outline" />
+                <span>خودرو ها</span>
+            </MenuItem>
+        </Menu>
+    </Sider>
+    <Layout Class="site-layout">
+        <Content Class="site-layout-background" Style="margin: 24px 16px;padding: 24px;min-height: 280px;">
+            @Body
+        </Content>
+    </Layout>
+</Layout>
+
+
