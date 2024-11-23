@@ -11,7 +11,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddDbContext<ApplicationDbContext>((conf, option) =>
+        services.AddDbContext<UsersDbContext>((conf, option) =>
         {
             var configuration = conf.GetRequiredService<IConfiguration>();
             option.UseSqlServer(configuration.GetConnectionString("BaseConnection"),

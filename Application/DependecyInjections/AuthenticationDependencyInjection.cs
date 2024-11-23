@@ -11,7 +11,7 @@ public static class AuthenticationDependencyInjection
     {
         services.AddAuthorization();
         services.AddIdentityApiEndpoints<UserAuthentication>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<UsersDbContext>();
         services.ConfigureApplicationCookie(options =>
         {
             //1 year

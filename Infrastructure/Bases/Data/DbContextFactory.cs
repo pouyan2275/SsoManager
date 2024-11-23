@@ -11,13 +11,13 @@ public class DbContextFactory
     {
         _connectionStrings = connectionStrings;
     }
-    public ApplicationDbContext Create(string key)
+    public UsersDbContext Create(string key)
     {
         if (string.IsNullOrEmpty(key)) throw new ArgumentNullException();
 
         var connStr = _connectionStrings[key] ?? throw new ArgumentNullException("Connection string not found");
-        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<UsersDbContext>();
         optionsBuilder.UseSqlServer(connStr);
-        return new ApplicationDbContext(optionsBuilder.Options);
+        return new UsersDbContext(optionsBuilder.Options);
     }
 }

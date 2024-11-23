@@ -7,7 +7,7 @@ namespace Infrastructure.Data.Repositories;
 
 public class UserAuthenticationRepository : Repository<UserAuthentication>, IUserAuthenticationRepository
 {
-    public UserAuthenticationRepository(ApplicationDbContext dbContext) : base(dbContext)
+    public UserAuthenticationRepository(UsersDbContext dbContext) : base(dbContext)
     {
     }
 }

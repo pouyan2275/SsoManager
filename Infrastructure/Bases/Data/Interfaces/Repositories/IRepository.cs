@@ -9,7 +9,7 @@ namespace Infrastructure.Bases.Interfaces.Repositories
     public interface IRepository<TEntity>
         where TEntity : class
     {
-        public ApplicationDbContext DbContext { get; set; }
+        public UsersDbContext DbContext { get; set; }
         public DbSet<TEntity> Entity {  get; set; }
         public IQueryable<TEntity> Table { get; }
         public IQueryable<TEntity> TableNoTracking { get; }

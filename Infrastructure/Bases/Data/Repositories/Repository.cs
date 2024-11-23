@@ -10,12 +10,12 @@ namespace Infrastructure.Bases.Data.Repositories;
 public class Repository<TEntity> : IRepository<TEntity>
     where TEntity : class
 {
-    public ApplicationDbContext DbContext { get; set; }
+    public UsersDbContext DbContext { get; set; }
     public DbSet<TEntity> Entity { get; set; }
     public IQueryable<TEntity> Table { get { return DbContext.Set<TEntity>().AsTracking().AsQueryable(); } }
     public IQueryable<TEntity> TableNoTracking { get { return DbContext.Set<TEntity>().AsNoTracking().AsQueryable(); } }
 
-    public Repository(ApplicationDbContext dbContext)
+    public Repository(UsersDbContext dbContext)
     {
         DbContext = dbContext;
         Entity = DbContext.Set<TEntity>();
